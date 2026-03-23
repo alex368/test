@@ -3,599 +3,692 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Agence — Studio Créatif</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<title>BTD Consulting — Outil de Levée de Fonds</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --black: #0d0d0d;
-    --white: #f5f2ec;
-    --accent: #c8f060;
-    --muted: #6b6b6b;
-    --border: #1e1e1e;
-  }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--black);
-    color: var(--white);
-    overflow-x: hidden;
-  }
-
-  /* NAV */
-  nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.5rem 4rem;
-    border-bottom: 0.5px solid var(--border);
-    position: sticky;
-    top: 0;
-    background: var(--black);
-    z-index: 100;
-  }
-
-  .nav-logo {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 1.1rem;
-    letter-spacing: -0.02em;
-    color: var(--white);
-    text-decoration: none;
-  }
-
-  .nav-links {
-    display: flex;
-    gap: 2.5rem;
-    list-style: none;
-  }
-
-  .nav-links a {
-    font-size: 0.85rem;
-    color: var(--muted);
-    text-decoration: none;
-    letter-spacing: 0.03em;
-    transition: color 0.2s;
-  }
-
-  .nav-links a:hover { color: var(--white); }
-
-  .nav-cta {
-    font-size: 0.85rem;
-    font-family: 'Syne', sans-serif;
-    font-weight: 600;
-    color: var(--black) !important;
-    background: var(--accent);
-    padding: 0.6rem 1.4rem;
-    border-radius: 2rem;
-    text-decoration: none;
-    transition: opacity 0.2s !important;
-  }
-
-  .nav-cta:hover { opacity: 0.85; }
-
-  /* HERO */
-  .hero {
-    padding: 6rem 4rem 5rem;
-    border-bottom: 0.5px solid var(--border);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: end;
-  }
-
-  .hero-tag {
-    display: inline-block;
-    font-size: 0.75rem;
-    letter-spacing: 0.1em;
-    color: var(--accent);
-    text-transform: uppercase;
-    margin-bottom: 2rem;
-    border: 0.5px solid var(--accent);
-    padding: 0.3rem 0.8rem;
-    border-radius: 2rem;
-  }
-
-  .hero h1 {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(2.8rem, 5vw, 4.5rem);
-    font-weight: 800;
-    line-height: 1.05;
-    letter-spacing: -0.04em;
-  }
-
-  .hero h1 em {
-    font-style: italic;
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 300;
-    color: var(--muted);
-  }
-
-  .hero-right {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    padding-bottom: 0.5rem;
-  }
-
-  .hero-desc {
-    font-size: 1rem;
-    color: var(--muted);
-    line-height: 1.7;
-    max-width: 380px;
-  }
-
-  .hero-actions {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-  }
-
-  .btn-primary {
-    font-family: 'Syne', sans-serif;
-    font-weight: 600;
-    font-size: 0.9rem;
-    background: var(--accent);
-    color: var(--black);
-    padding: 0.85rem 2rem;
-    border-radius: 2rem;
-    text-decoration: none;
-    transition: opacity 0.2s;
-  }
-
-  .btn-primary:hover { opacity: 0.85; }
-
-  .btn-secondary {
-    font-size: 0.85rem;
-    color: var(--muted);
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    transition: color 0.2s;
-  }
-
-  .btn-secondary:hover { color: var(--white); }
-
-  .arrow-icon {
-    width: 18px;
-    height: 18px;
-    border: 0.5px solid var(--muted);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-  }
-
-  /* MARQUEE */
-  .marquee-wrap {
-    overflow: hidden;
-    border-bottom: 0.5px solid var(--border);
-    padding: 1.2rem 0;
-    background: #111;
-  }
-
-  .marquee-track {
-    display: flex;
-    gap: 3rem;
-    width: max-content;
-    animation: scroll 18s linear infinite;
-  }
-
-  .marquee-track span {
-    font-family: 'Syne', sans-serif;
-    font-size: 0.75rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--muted);
-    white-space: nowrap;
-  }
-
-  .marquee-track span.dot {
-    color: var(--accent);
-    letter-spacing: 0;
-  }
-
-  @keyframes scroll {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
-
-  /* SERVICES */
-  .services {
-    padding: 5rem 4rem;
-    border-bottom: 0.5px solid var(--border);
-  }
-
-  .section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 3rem;
-  }
-
-  .section-label {
-    font-size: 0.7rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-
-  .section-title {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(1.8rem, 3vw, 2.5rem);
-    font-weight: 700;
-    letter-spacing: -0.03em;
-  }
-
-  .services-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--border);
-  }
-
-  .service-card {
-    background: var(--black);
-    padding: 2.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    transition: background 0.25s;
-  }
-
-  .service-card:hover { background: #141414; }
-
-  .service-num {
-    font-family: 'Syne', sans-serif;
-    font-size: 0.75rem;
-    color: var(--accent);
-    font-weight: 600;
-  }
-
-  .service-card h3 {
-    font-family: 'Syne', sans-serif;
-    font-size: 1.15rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-  }
-
-  .service-card p {
-    font-size: 0.88rem;
-    color: var(--muted);
-    line-height: 1.7;
-  }
-
-  .service-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    margin-top: auto;
-  }
-
-  .tag {
-    font-size: 0.7rem;
-    letter-spacing: 0.05em;
-    color: var(--muted);
-    border: 0.5px solid var(--border);
-    padding: 0.25rem 0.6rem;
-    border-radius: 2rem;
-  }
-
-  /* STATS */
-  .stats {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    border-bottom: 0.5px solid var(--border);
-  }
-
-  .stat {
-    padding: 3rem 2.5rem;
-    border-right: 0.5px solid var(--border);
-  }
-
-  .stat:last-child { border-right: none; }
-
-  .stat-num {
-    font-family: 'Syne', sans-serif;
-    font-size: 2.8rem;
-    font-weight: 800;
-    letter-spacing: -0.05em;
-    color: var(--accent);
-    line-height: 1;
-    margin-bottom: 0.5rem;
-  }
-
-  .stat-label {
-    font-size: 0.82rem;
-    color: var(--muted);
-  }
-
-  /* PROCESS */
-  .process {
-    padding: 5rem 4rem;
-    border-bottom: 0.5px solid var(--border);
-  }
-
-  .process-steps {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
-    margin-top: 3rem;
-  }
-
-  .step {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .step-circle {
-    width: 40px;
-    height: 40px;
-    border: 0.5px solid var(--border);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Syne', sans-serif;
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--accent);
-  }
-
-  .step h4 {
-    font-family: 'Syne', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 700;
-    letter-spacing: -0.01em;
-  }
-
-  .step p {
-    font-size: 0.82rem;
-    color: var(--muted);
-    line-height: 1.65;
-  }
-
-  /* CTA */
-  .cta-section {
-    padding: 6rem 4rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 2rem;
-    border-bottom: 0.5px solid var(--border);
-  }
-
-  .cta-section h2 {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(2.2rem, 4vw, 3.5rem);
-    font-weight: 800;
-    letter-spacing: -0.04em;
-    max-width: 700px;
-    line-height: 1.1;
-  }
-
-  .cta-section h2 em {
-    font-style: italic;
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 300;
-    color: var(--muted);
-  }
-
-  .cta-section p {
-    font-size: 0.95rem;
-    color: var(--muted);
-    max-width: 480px;
-    line-height: 1.7;
-  }
-
-  /* FOOTER */
-  footer {
-    padding: 2rem 4rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  footer p {
-    font-size: 0.78rem;
-    color: var(--muted);
-  }
-
-  .footer-links {
-    display: flex;
-    gap: 1.5rem;
-    list-style: none;
-  }
-
-  .footer-links a {
-    font-size: 0.78rem;
-    color: var(--muted);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
-  .footer-links a:hover { color: var(--white); }
-
-  /* RESPONSIVE */
-  @media (max-width: 900px) {
-    nav { padding: 1.2rem 2rem; }
-    .nav-links { display: none; }
-    .hero { grid-template-columns: 1fr; padding: 4rem 2rem 3rem; gap: 2rem; }
-    .services { padding: 3rem 2rem; }
-    .services-grid { grid-template-columns: 1fr; }
-    .stats { grid-template-columns: repeat(2, 1fr); }
-    .stat { border-right: none; border-bottom: 0.5px solid var(--border); }
-    .process { padding: 3rem 2rem; }
-    .process-steps { grid-template-columns: repeat(2, 1fr); }
-    .cta-section { padding: 4rem 2rem; }
-    footer { flex-direction: column; gap: 1rem; padding: 2rem; text-align: center; }
-  }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--royal:#2952a3;--dark:#1e3d7a;--light:#dbeafe;--pale:#f0f4ff;--green:#15803d;--red:#b91c1c;--amber:#b45309;--purple:#7c3aed;--teal:#0f766e}
+body{background:#eef2f7;font-family:'Barlow',sans-serif;color:#1e293b;min-height:100vh;padding:24px 16px}
+.page-nav{display:flex;background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(41,82,163,0.10);margin-bottom:4px;overflow:hidden;max-width:1000px;margin-left:auto;margin-right:auto}
+.nav-btn{flex:1;padding:14px 8px;border:none;background:transparent;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#94a3b8;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s}
+.nav-btn:hover{color:var(--royal);background:var(--pale)}
+.nav-btn.active{color:var(--royal);border-bottom-color:var(--royal);background:var(--pale)}
+.card{background:#fff;border-radius:14px;box-shadow:0 2px 16px rgba(41,82,163,0.08);max-width:1000px;margin:0 auto 20px;overflow:hidden}
+.card-header{background:var(--royal);padding:20px 28px;display:flex;align-items:center;justify-content:space-between}
+.card-title{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;color:#fff;letter-spacing:2px;text-transform:uppercase}
+.card-sub{font-size:11px;letter-spacing:2px;color:rgba(255,255,255,0.55);margin-top:2px;text-transform:uppercase}
+.card-body{padding:24px 28px}
+.btd-logo-wrap{display:flex;flex-direction:column;align-items:flex-start;gap:1px}
+.btd-tagline{font-family:'Dancing Script',cursive;font-size:12px;color:rgba(255,255,255,0.8)}
+.slbl{font-size:10px;letter-spacing:3px;color:var(--royal);text-transform:uppercase;font-weight:600;margin:18px 0 10px;display:flex;align-items:center;gap:8px}
+.slbl::after{content:'';flex:1;height:1px;background:var(--light)}
+.slbl:first-child{margin-top:0}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.g4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.field{display:flex;flex-direction:column;gap:5px}
+.field label{font-size:12px;color:#64748b;font-weight:500}
+.field input,.field select{background:#fff;border:1px solid #cbd5e1;border-radius:7px;color:#1e293b;font-size:13px;padding:8px 11px;font-family:'Barlow',sans-serif;outline:none;transition:border-color .15s}
+.field input:focus,.field select:focus{border-color:var(--royal)}
+.field .hint{font-size:11px;color:#94a3b8}
+.srow{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.srow label{font-size:12px;color:#64748b;min-width:210px;font-weight:500}
+.srow .sval{font-size:14px;font-weight:700;color:var(--royal);min-width:100px;text-align:right;font-family:'Barlow Condensed',sans-serif}
+input[type=range]{flex:1;min-width:80px;height:4px;-webkit-appearance:none;appearance:none;background:var(--light);border-radius:2px;outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;border-radius:50%;background:var(--royal);cursor:pointer;border:2px solid #fff;box-shadow:0 0 0 1px var(--royal)}
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:16px 0}
+.metric{background:var(--pale);border:1px solid var(--light);border-radius:10px;padding:11px 13px}
+.metric .ml{font-size:10px;letter-spacing:1px;color:#64748b;text-transform:uppercase;margin-bottom:4px}
+.metric .mv{font-size:17px;font-weight:700;font-family:'Barlow Condensed',sans-serif;letter-spacing:1px}
+.mv.royal{color:var(--royal)}.mv.green{color:var(--green)}.mv.red{color:var(--red)}.mv.dark{color:#1e293b}.mv.amber{color:var(--amber)}.mv.purple{color:var(--purple)}.mv.teal{color:var(--teal)}
+.tab-row{display:flex;gap:5px;margin-bottom:14px;flex-wrap:wrap}
+.tab{font-size:11px;padding:5px 14px;border-radius:5px;border:1px solid #cbd5e1;background:#fff;color:#64748b;cursor:pointer;letter-spacing:1px;font-weight:500;font-family:'Barlow',sans-serif;transition:all .15s}
+.tab:hover{border-color:var(--royal);color:var(--royal)}
+.tab.active{background:var(--royal);color:#fff;border-color:var(--royal)}
+.btn{font-size:12px;padding:7px 16px;border-radius:7px;border:1px solid var(--royal);background:#fff;color:var(--royal);cursor:pointer;font-family:'Barlow',sans-serif;font-weight:500}
+.btn-sm{font-size:11px;padding:4px 11px;border-radius:5px;border:1px solid #fca5a5;background:#fff;color:var(--red);cursor:pointer}
+.instrument-card{border:1px solid #e2e8f0;border-radius:10px;padding:14px;margin-bottom:10px;background:#fafafa}
+.instrument-card .ic-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.ic-type{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:3px 10px;border-radius:99px}
+.type-oc{background:#fef3c7;color:#92400e}.type-bspce{background:#ede9fe;color:#4c1d95}.type-bsa{background:#d1fae5;color:#065f46}
+.result-box{background:var(--pale);border:1px solid var(--light);border-radius:10px;padding:16px;margin-top:14px}
+.result-box h4{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:var(--royal);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
+.valo-result{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.valo-card{background:#fff;border:2px solid var(--light);border-radius:10px;padding:14px;text-align:center}
+.valo-card.best{border-color:var(--royal);background:var(--pale)}
+.valo-card .vc-label{font-size:10px;letter-spacing:2px;color:#64748b;text-transform:uppercase;margin-bottom:6px}
+.valo-card .vc-val{font-size:22px;font-weight:700;font-family:'Barlow Condensed',sans-serif;color:var(--royal)}
+.valo-card .vc-method{font-size:11px;color:#94a3b8;margin-top:3px}
+.valo-card.best .vc-label{color:var(--royal)}
+.info-box{background:#eff6ff;border:1px solid var(--light);border-radius:8px;padding:12px 14px;font-size:12px;color:#1e3a8a;margin-bottom:12px;line-height:1.6}
+.warn-box{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:12px 14px;font-size:12px;color:#92400e;margin-bottom:12px;line-height:1.6}
+.dtable{width:100%;border-collapse:collapse;font-size:12px;margin-top:10px}
+.dtable th{background:var(--royal);color:#fff;padding:8px 10px;text-align:left;font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;font-size:11px;text-transform:uppercase}
+.dtable td{padding:8px 10px;border-bottom:1px solid #f1f5f9}
+.dtable tr:nth-child(even) td{background:var(--pale)}
+.dtable tr:last-child td{background:var(--pale);font-weight:600;border-top:2px solid var(--light)}
+.legend-el{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:10px;font-size:11px;color:#64748b}
+hr.div{border:none;border-top:1px solid #e2e8f0;margin:16px 0}
+.btd-footer{background:var(--royal);padding:16px 28px;max-width:1000px;margin:0 auto;border-radius:0 0 14px 14px}
+.footer-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.f-brand{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:#fff;letter-spacing:2px}
+.f-tag{font-family:'Dancing Script',cursive;font-size:13px;color:rgba(255,255,255,0.8)}
+.footer-contact{display:flex;align-items:center;gap:20px;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,0.15);padding-top:10px}
+.contact-item{display:flex;align-items:center;gap:7px;font-size:12px;color:rgba(255,255,255,0.9);text-decoration:none;font-family:'Barlow',sans-serif}
+.contact-icon{width:28px;height:28px;border-radius:6px;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.page-section{display:none}
+.page-section.active{display:block}
+.irow{display:flex;gap:8px;align-items:center;margin-bottom:8px;flex-wrap:wrap}
+.irow input[type=text],.irow input[type=number]{background:#fff;border:1px solid #cbd5e1;border-radius:6px;color:#1e293b;font-size:12px;padding:6px 9px;font-family:'Barlow',sans-serif;outline:none}
+.irow input[type=text]{width:130px}.irow input[type=number]{width:80px}
+.irow .pct{font-size:12px;color:#64748b}
+.toggle-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.toggle{position:relative;width:40px;height:22px;flex-shrink:0}
+.toggle input{opacity:0;width:0;height:0}
+.toggle-slider{position:absolute;inset:0;background:#cbd5e1;border-radius:99px;cursor:pointer;transition:.2s}
+.toggle-slider:before{content:'';position:absolute;width:16px;height:16px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s}
+.toggle input:checked+.toggle-slider{background:var(--royal)}
+.toggle input:checked+.toggle-slider:before{transform:translateX(18px)}
+.toggle-label{font-size:13px;color:#1e293b;font-weight:500}
+@media(max-width:640px){.g2,.g3,.g4,.metrics,.valo-result{grid-template-columns:1fr}.srow{flex-wrap:wrap}.srow label{min-width:100%}.page-nav{flex-wrap:wrap}.nav-btn{font-size:11px;padding:10px 6px}}
 </style>
 </head>
 <body>
 
+<!-- HEADER -->
+<div class="card" style="margin-bottom:0;border-radius:14px 14px 0 0">
+  <div class="card-header" style="border-radius:14px 14px 0 0">
+    <div class="btd-logo-wrap">
+      <svg width="130" height="68" viewBox="0 0 260 135" xmlns="http://www.w3.org/2000/svg">
+        <text x="4" y="98" font-family="Arial Black,Arial,sans-serif" font-size="108" font-weight="900" fill="white">BTD</text>
+        <text x="30" y="130" font-family="Arial,sans-serif" font-size="18" fill="white" letter-spacing="10" font-weight="400">CONSULTING</text>
+      </svg>
+      <div class="btd-tagline">Accompagnons votre r&#233;ussite</div>
+    </div>
+    <div style="text-align:right">
+      <div class="card-title">Outil de Lev&#233;e de Fonds</div>
+      <div class="card-sub">Valorisation &middot; Dilution &middot; Instruments &middot; Cap Table</div>
+    </div>
+  </div>
+</div>
+
 <!-- NAV -->
-<nav>
-  <a href="#" class="nav-logo">STUDIO.&nbsp;</a>
-  <ul class="nav-links">
-    <li><a href="#services">Services</a></li>
-    <li><a href="#process">Process</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#contact" class="nav-cta">Démarrer un projet</a></li>
-  </ul>
-</nav>
+<div class="page-nav" style="border-radius:0;margin-bottom:4px">
+  <button class="nav-btn active" onclick="showPage('valo',this)">Valorisation</button>
+  <button class="nav-btn" onclick="showPage('dilution',this)">Dilution</button>
+  <button class="nav-btn" onclick="showPage('instruments',this)">Instruments</button>
+  <button class="nav-btn" onclick="showPage('captable',this)">Cap Table</button>
+  <button class="nav-btn" onclick="showPage('synthese',this)">Synth&#232;se</button>
+</div>
 
-<!-- HERO -->
-<section class="hero">
+<!-- PAGE VALORISATION -->
+<div id="page-valo" class="page-section active">
+<div class="card"><div class="card-header"><div>
+  <div class="card-title">Calculateur de valorisation</div>
+  <div class="card-sub">M&#233;thodes multiples &middot; Secteur &middot; Multiples</div>
+</div></div><div class="card-body">
+<div class="info-box">Ce calculateur croise plusieurs m&#233;thodes d&#39;&#233;valuation couramment utilis&#233;es en capital-risque. La valorisation retenue est g&#233;n&#233;ralement la m&#233;diane des m&#233;thodes applicables &#224; votre stade et secteur.</div>
+<div class="slbl">Profil de l&#39;entreprise</div>
+<div class="g2" style="margin-bottom:12px">
+  <div class="field"><label>Secteur d&#39;activit&#233;</label>
+    <select id="v-secteur" onchange="calcValo()">
+      <option value="saas">SaaS / Logiciel</option><option value="fintech">Fintech</option>
+      <option value="marketplace">Marketplace</option><option value="ecommerce">E-commerce</option>
+      <option value="biotech">Biotech / Medtech</option><option value="deeptech">Deeptech / IA</option>
+      <option value="industrie">Industrie / Cleantech</option><option value="conseil">Conseil / Services</option>
+      <option value="immo">Immobilier / PropTech</option><option value="autre">Autre</option>
+    </select></div>
+  <div class="field"><label>Stade de d&#233;veloppement</label>
+    <select id="v-stade" onchange="calcValo()">
+      <option value="idea">Id&#233;e / Pr&#233;-seed</option><option value="seed">Seed (MVP valid&#233;)</option>
+      <option value="series_a" selected>S&#233;rie A (traction)</option><option value="series_b">S&#233;rie B (scale)</option>
+      <option value="late">Late stage / Rentable</option>
+    </select></div>
+  <div class="field"><label>Mod&#232;le de revenus</label>
+    <select id="v-model" onchange="calcValo()">
+      <option value="recurrent">Revenus r&#233;currents (ARR/MRR)</option>
+      <option value="transactionnel">Transactionnel</option>
+      <option value="projet">Sur projet / One-shot</option>
+      <option value="abonnement">Abonnement consommateurs</option>
+    </select></div>
+  <div class="field"><label>March&#233; principal</label>
+    <select id="v-market" onchange="calcValo()">
+      <option value="fr">France</option><option value="eu">Europe</option><option value="us">USA / Global</option>
+    </select></div>
+</div>
+<div class="slbl">Donn&#233;es financi&#232;res</div>
+<div class="g3" style="margin-bottom:12px">
+  <div class="field"><label>CA actuel (&#8364;/an)</label><input type="number" id="v-ca" value="500000" min="0" oninput="calcValo()"><span class="hint">0 si pr&#233;-revenue</span></div>
+  <div class="field"><label>ARR / MRR annualis&#233; (&#8364;)</label><input type="number" id="v-arr" value="400000" min="0" oninput="calcValo()"></div>
+  <div class="field"><label>Croissance annuelle (%)</label><input type="number" id="v-growth" value="80" min="0" oninput="calcValo()"></div>
+  <div class="field"><label>EBITDA (&#8364;/an)</label><input type="number" id="v-ebitda" value="-50000" oninput="calcValo()"><span class="hint">N&#233;gatif si burn</span></div>
+  <div class="field"><label>Marge brute (%)</label><input type="number" id="v-margin" value="65" min="0" max="100" oninput="calcValo()"></div>
+  <div class="field"><label>Nombre de clients</label><input type="number" id="v-clients" value="120" min="0" oninput="calcValo()"></div>
+  <div class="field"><label>LTV moyen par client (&#8364;)</label><input type="number" id="v-ltv" value="3000" min="0" oninput="calcValo()"></div>
+  <div class="field"><label>CA N+1 projet&#233; (&#8364;)</label><input type="number" id="v-ca-n1" value="900000" min="0" oninput="calcValo()"></div>
+  <div class="field"><label>TAM estim&#233; (&#8364;)</label><input type="number" id="v-tam" value="500000000" min="0" oninput="calcValo()"></div>
+</div>
+<div class="slbl">Ajustements qualitatifs</div>
+<div class="g2" style="margin-bottom:12px">
+  <div class="field"><label>&#201;quipe fondatrice</label>
+    <select id="v-team" onchange="calcValo()">
+      <option value="1">Primo-entrepreneur</option><option value="1.1">Exp&#233;rience sectorielle</option>
+      <option value="1.2" selected>Serial entrepreneur / Ex-corporate</option><option value="1.35">Top &#233;cole + Exit pr&#233;c&#233;dent</option>
+    </select></div>
+  <div class="field"><label>Barri&#232;res &#224; l&#39;entr&#233;e / IP</label>
+    <select id="v-ip" onchange="calcValo()">
+      <option value="0.9">Faibles</option><option value="1" selected>Moyennes</option>
+      <option value="1.15">Fortes (brevet, data, r&#233;seau)</option><option value="1.3">Tr&#232;s fortes</option>
+    </select></div>
+  <div class="field"><label>Concurrence</label>
+    <select id="v-competition" onchange="calcValo()">
+      <option value="0.9">Tr&#232;s concurrentiel</option><option value="1" selected>Mod&#233;r&#233;</option>
+      <option value="1.1">Peu concurrentiel</option><option value="1.2">Blue ocean</option>
+    </select></div>
+  <div class="field"><label>Churn annuel (%)</label><input type="number" id="v-churn" value="10" min="0" max="100" oninput="calcValo()"><span class="hint">Taux d&#39;attrition clients</span></div>
+</div>
+<div class="slbl">R&#233;sultats de valorisation</div>
+<div id="valo-results" class="valo-result"></div>
+<div id="valo-metrics" class="metrics" style="margin-top:14px"></div>
+<div id="valo-reco" class="result-box" style="margin-top:14px"></div>
+</div></div>
+</div>
+
+<!-- PAGE DILUTION -->
+<div id="page-dilution" class="page-section">
+<div class="card"><div class="card-header"><div>
+  <div class="card-title">Simulateur de dilution</div>
+  <div class="card-sub">Tours de table &middot; Clauses anti-dilution &middot; Ratchets</div>
+</div></div><div class="card-body">
+<div class="slbl">Param&#232;tres du tour</div>
+<div class="srow"><label>Valorisation pre-money</label><input type="range" id="d-pre" min="100000" max="20000000" step="100000" value="3000000" oninput="updateSlider('d-pre','d-pre-v');calcDilution()"><span class="sval" id="d-pre-v">3 000 000 &#8364;</span></div>
+<div class="srow"><label>Montant lev&#233;</label><input type="range" id="d-raise" min="50000" max="5000000" step="50000" value="500000" oninput="updateSlider('d-raise','d-raise-v');calcDilution()"><span class="sval" id="d-raise-v">500 000 &#8364;</span></div>
+<div class="srow"><label>Pool ESOP / BSPCE (post-money)</label><input type="range" id="d-esop" min="0" max="25" step="1" value="10" oninput="updateSlider('d-esop','d-esop-v');calcDilution()"><span class="sval" id="d-esop-v">10%</span></div>
+<div class="slbl">Clauses avanc&#233;es</div>
+<div class="g2" style="margin-bottom:14px">
   <div>
-    <span class="hero-tag">Studio créatif — Marseille</span>
-    <h1>On conçoit<br>ce qui <em>vous</em><br>distingue.</h1>
+    <div class="toggle-row"><label class="toggle"><input type="checkbox" id="d-antidilution" onchange="calcDilution()"><span class="toggle-slider"></span></label><span class="toggle-label">Clause anti-dilution</span></div>
+    <div class="field" style="margin-top:8px"><label>Type de protection</label>
+      <select id="d-antidilution-type" onchange="calcDilution()">
+        <option value="full_ratchet">Full ratchet</option>
+        <option value="broad_based" selected>Broad-based weighted average</option>
+        <option value="narrow_based">Narrow-based weighted average</option>
+      </select><span class="hint">Active seulement si clause coch&#233;e</span></div>
   </div>
-  <div class="hero-right">
-    <p class="hero-desc">
-      Design, développement web et stratégie digitale. Nous transformons vos idées en expériences mémorables qui génèrent de vrais résultats.
-    </p>
-    <div class="hero-actions">
-      <a href="#contact" class="btn-primary">Démarrer un projet</a>
-      <a href="#services" class="btn-secondary">
-        <span class="arrow-icon">↓</span>
-        Voir nos services
-      </a>
+  <div>
+    <div class="toggle-row"><label class="toggle"><input type="checkbox" id="d-ratchet" onchange="calcDilution()"><span class="toggle-slider"></span></label><span class="toggle-label">Ratchet de performance</span></div>
+    <div class="g2" style="margin-top:8px;gap:8px">
+      <div class="field"><label>CA cible N+1 (&#8364;)</label><input type="number" id="d-ratchet-target" value="1000000" oninput="calcDilution()"></div>
+      <div class="field"><label>% r&#233;cup&#233;r&#233; si manqu&#233;</label><input type="number" id="d-ratchet-pct" value="5" min="0" max="20" oninput="calcDilution()"></div>
     </div>
   </div>
-</section>
-
-<!-- MARQUEE -->
-<div class="marquee-wrap">
-  <div class="marquee-track">
-    <span>Identité visuelle</span><span class="dot">✦</span>
-    <span>Développement web</span><span class="dot">✦</span>
-    <span>UI/UX Design</span><span class="dot">✦</span>
-    <span>Stratégie digitale</span><span class="dot">✦</span>
-    <span>Motion design</span><span class="dot">✦</span>
-    <span>E-commerce</span><span class="dot">✦</span>
-    <span>Identité visuelle</span><span class="dot">✦</span>
-    <span>Développement web</span><span class="dot">✦</span>
-    <span>UI/UX Design</span><span class="dot">✦</span>
-    <span>Stratégie digitale</span><span class="dot">✦</span>
-    <span>Motion design</span><span class="dot">✦</span>
-    <span>E-commerce</span><span class="dot">✦</span>
+  <div>
+    <div class="toggle-row"><label class="toggle"><input type="checkbox" id="d-liquidpref" onchange="calcDilution()"><span class="toggle-slider"></span></label><span class="toggle-label">Pr&#233;f&#233;rence de liquidation</span></div>
+    <div class="g2" style="margin-top:8px;gap:8px">
+      <div class="field"><label>Multiplicateur</label>
+        <select id="d-liq-mult" onchange="calcDilution()">
+          <option value="1">1x</option><option value="1.5">1,5x</option><option value="2">2x</option><option value="3">3x</option>
+        </select></div>
+      <div class="field"><label>Type</label>
+        <select id="d-liq-type" onchange="calcDilution()">
+          <option value="non_participating">Non-participating</option>
+          <option value="participating">Participating (double dip)</option>
+        </select></div>
+    </div>
+  </div>
+  <div>
+    <div class="toggle-row"><label class="toggle"><input type="checkbox" id="d-drag" onchange="calcDilution()"><span class="toggle-slider"></span></label><span class="toggle-label">Drag-along / Tag-along</span></div>
+    <div class="g2" style="margin-top:8px;gap:8px">
+      <div class="field"><label>Seuil drag-along (%)</label><input type="number" id="d-drag-pct" value="70" min="50" max="100" oninput="calcDilution()"></div>
+      <div class="field"><label>Multiple de sortie cible</label><input type="number" id="d-exit-mult" value="5" min="1" oninput="calcDilution()"></div>
+    </div>
   </div>
 </div>
-
-<!-- SERVICES -->
-<section class="services" id="services">
-  <div class="section-header">
-    <span class="section-label">Nos services</span>
-    <h2 class="section-title">Ce qu'on fait,<br>on le fait bien.</h2>
-  </div>
-  <div class="services-grid">
-    <div class="service-card">
-      <span class="service-num">01</span>
-      <h3>Design & Identité</h3>
-      <p>Logo, charte graphique, supports de communication — une identité cohérente qui parle à vos clients.</p>
-      <div class="service-tags">
-        <span class="tag">Branding</span>
-        <span class="tag">Logo</span>
-        <span class="tag">Charte graphique</span>
-      </div>
-    </div>
-    <div class="service-card">
-      <span class="service-num">02</span>
-      <h3>Développement Web</h3>
-      <p>Sites vitrine, e-commerce, applications web sur-mesure. Rapides, accessibles, optimisés SEO.</p>
-      <div class="service-tags">
-        <span class="tag">React</span>
-        <span class="tag">Next.js</span>
-        <span class="tag">Shopify</span>
-      </div>
-    </div>
-    <div class="service-card">
-      <span class="service-num">03</span>
-      <h3>Stratégie Digitale</h3>
-      <p>Audit, positionnement, acquisition. On aligne votre présence en ligne avec vos objectifs business.</p>
-      <div class="service-tags">
-        <span class="tag">SEO</span>
-        <span class="tag">Ads</span>
-        <span class="tag">Analytics</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- STATS -->
-<div class="stats">
-  <div class="stat">
-    <div class="stat-num">80+</div>
-    <div class="stat-label">Projets livrés</div>
-  </div>
-  <div class="stat">
-    <div class="stat-num">98%</div>
-    <div class="stat-label">Clients satisfaits</div>
-  </div>
-  <div class="stat">
-    <div class="stat-num">5 ans</div>
-    <div class="stat-label">D'expérience</div>
-  </div>
-  <div class="stat">
-    <div class="stat-num">12j</div>
-    <div class="stat-label">Délai moyen</div>
-  </div>
+<div class="slbl">Actionnaires existants</div>
+<div id="d-founder-rows"></div>
+<button class="btn" onclick="addDFounder()" style="margin-top:6px">+ Ajouter un actionnaire</button>
+<hr class="div">
+<div id="d-metrics" class="metrics"></div>
+<div class="tab-row" style="margin-top:14px">
+  <button class="tab active" id="dtabPie" onclick="setDTab('pie',this)">Cap table post</button>
+  <button class="tab" id="dtabBar" onclick="setDTab('bar',this)">Avant / Apr&#232;s</button>
+  <button class="tab" id="dtabValo" onclick="setDTab('valo',this)">Valeur des parts</button>
+  <button class="tab" id="dtabExit" onclick="setDTab('exit',this)">Simulation de sortie</button>
+</div>
+<div class="legend-el" id="d-legend"></div>
+<div style="position:relative;width:100%;height:300px"><canvas id="d-chart"></canvas></div>
+<div id="d-clauses-summary" class="result-box" style="margin-top:14px"></div>
+</div></div>
 </div>
 
-<!-- PROCESS -->
-<section class="process" id="process">
-  <div class="section-header">
-    <span class="section-label">Notre process</span>
-    <h2 class="section-title">Simple,<br>transparent.</h2>
-  </div>
-  <div class="process-steps">
-    <div class="step">
-      <div class="step-circle">01</div>
-      <h4>Brief</h4>
-      <p>On prend le temps de comprendre votre activité, vos objectifs et votre audience cible.</p>
-    </div>
-    <div class="step">
-      <div class="step-circle">02</div>
-      <h4>Stratégie</h4>
-      <p>On définit ensemble le plan d'action, les livrables et le calendrier du projet.</p>
-    </div>
-    <div class="step">
-      <div class="step-circle">03</div>
-      <h4>Création</h4>
-      <p>On conçoit et développe. Vous suivez l'avancement en temps réel avec des points réguliers.</p>
-    </div>
-    <div class="step">
-      <div class="step-circle">04</div>
-      <h4>Livraison</h4>
-      <p>Mise en ligne, formation et support. On reste disponibles après le lancement.</p>
-    </div>
-  </div>
-</section>
+<!-- PAGE INSTRUMENTS -->
+<div id="page-instruments" class="page-section">
+<div class="card"><div class="card-header"><div>
+  <div class="card-title">Instruments financiers</div>
+  <div class="card-sub">OC &middot; BSPCE &middot; BSA AIR</div>
+</div></div><div class="card-body">
+<div class="info-box">Chaque instrument a un impact diff&#233;rent sur la dilution. Configurez vos instruments pour visualiser leur effet sur le cap table.</div>
+<div class="slbl">Obligations convertibles (OC / SAFE)</div>
+<div id="oc-list"></div>
+<button class="btn" onclick="addInstrument('oc')" style="margin-bottom:16px">+ Ajouter une OC / SAFE</button>
+<div class="slbl">BSPCE</div>
+<div class="info-box" style="margin-bottom:8px">R&#233;serv&#233;s aux salari&#233;s et dirigeants. Vesting 4 ans / cliff 1 an. Fiscalit&#233; avantageuse (PFU 30% ou 12,8% apr&#232;s 3 ans).</div>
+<div id="bspce-list"></div>
+<button class="btn" onclick="addInstrument('bspce')" style="margin-bottom:16px">+ Ajouter un plan BSPCE</button>
+<div class="slbl">BSA AIR</div>
+<div class="info-box" style="margin-bottom:8px">Instrument de pr&#233;-amor&#231;age. Conversion automatique lors du prochain tour qualifi&#233; avec d&#233;cote ou valuation cap.</div>
+<div id="bsa-list"></div>
+<button class="btn" onclick="addInstrument('bsa')" style="margin-bottom:16px">+ Ajouter un BSA AIR</button>
+<div class="slbl">Impact dilutif total</div>
+<div id="instruments-impact" class="result-box"></div>
+<div style="position:relative;width:100%;height:260px;margin-top:14px"><canvas id="inst-chart"></canvas></div>
+</div></div>
+</div>
 
-<!-- CTA -->
-<section class="cta-section" id="contact">
-  <h2>Prêt à lancer<br><em>votre</em> projet ?</h2>
-  <p>Discutons de vos besoins. Premier échange gratuit, sans engagement.</p>
-  <a href="mailto:hello@votre-studio.fr" class="btn-primary">Nous contacter →</a>
-</section>
+<!-- PAGE CAP TABLE -->
+<div id="page-captable" class="page-section">
+<div class="card"><div class="card-header"><div>
+  <div class="card-title">Cap table compl&#232;te</div>
+  <div class="card-sub">Fully diluted &middot; Sc&#233;narios de sortie</div>
+</div></div><div class="card-body">
+<div class="slbl">Cap table fully diluted</div>
+<div class="warn-box">La cap table fully diluted int&#232;gre toutes les actions existantes + tous les instruments dilutifs comme s&#39;ils &#233;taient exerc&#233;s.</div>
+<div id="captable-table-wrap"></div>
+<hr class="div">
+<div class="slbl">Simulation de sortie</div>
+<div class="g3" style="margin-bottom:14px">
+  <div class="field"><label>Valorisation de sortie (&#8364;)</label><input type="number" id="ct-exit-val" value="15000000" oninput="calcCapTable()"></div>
+  <div class="field"><label>Type de sortie</label>
+    <select id="ct-exit-type" onchange="calcCapTable()">
+      <option value="acquisition">Acquisition / M&amp;A</option>
+      <option value="ipo">IPO</option>
+      <option value="secondaire">Secondaire</option>
+    </select></div>
+  <div class="field"><label>Ann&#233;e de sortie</label><input type="number" id="ct-exit-year" value="5" min="1" max="15" oninput="calcCapTable()"></div>
+</div>
+<div id="captable-exit-results" class="result-box"></div>
+</div></div>
+</div>
+
+<!-- PAGE SYNTHESE -->
+<div id="page-synthese" class="page-section">
+<div class="card"><div class="card-header"><div>
+  <div class="card-title">Synth&#232;se du dossier</div>
+  <div class="card-sub">R&#233;capitulatif &middot; Recommandations &middot; Points de vigilance</div>
+</div></div><div class="card-body">
+<div id="synthese-content"></div>
+</div></div>
+</div>
 
 <!-- FOOTER -->
-<footer>
-  <p>© 2025 Studio. Tous droits réservés.</p>
-  <ul class="footer-links">
-    <li><a href="#">Mentions légales</a></li>
-    <li><a href="#">LinkedIn</a></li>
-    <li><a href="#">Instagram</a></li>
-  </ul>
-</footer>
+<div class="btd-footer">
+  <div class="footer-top">
+    <span class="f-brand">BTD CONSULTING</span>
+    <span class="f-tag">Accompagnons votre r&#233;ussite</span>
+  </div>
+  <div class="footer-contact">
+    <a class="contact-item" href="https://www.linkedin.com/in/racym-bouteldja-btd-consulting/" target="_blank" rel="noopener">
+      <div class="contact-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
+      Racym Bouteldja &#8212; LinkedIn
+    </a>
+    <a class="contact-item" href="mailto:financement@btdconsulting.fr">
+      <div class="contact-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+      financement@btdconsulting.fr
+    </a>
+    <a class="contact-item" href="tel:+33631093538">
+      <div class="contact-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8a19.79 19.79 0 01-3.07-8.68A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div>
+      06 31 09 35 38
+    </a>
+  </div>
+</div>
 
+<!-- DISCLAIMER -->
+<div style="max-width:1000px;margin:12px auto 28px;padding:14px 20px;background:#fff8f0;border:1px solid #fed7aa;border-radius:10px;display:flex;align-items:flex-start;gap:12px">
+  <span style="font-size:18px;flex-shrink:0;margin-top:2px">&#9888;</span>
+  <p style="font-size:12px;color:#78350f;line-height:1.8;font-family:'Barlow',sans-serif">
+    <strong>Avertissement &#8212; Estimation indicative uniquement.</strong>
+    Les r&#233;sultats fournis par cet outil sont g&#233;n&#233;r&#233;s automatiquement sur la base de crit&#232;res financiers et sectoriels g&#233;n&#233;riques. Ils constituent une <strong>estimation &#224; titre purement indicatif</strong> et ne sauraient en aucun cas &#234;tre consid&#233;r&#233;s comme une valorisation officielle, un conseil en investissement, ou un document &#224; valeur contractuelle ou juridique.
+    Toute d&#233;cision de lev&#233;e de fonds, de cession de capital ou de structuration d&#39;instruments financiers doit faire l&#39;objet d&#39;un <strong>accompagnement par des experts qualifi&#233;s</strong> (conseil en financement, avocat d&#39;affaires, expert-comptable) afin d&#39;obtenir une analyse pr&#233;cise, personnalis&#233;e et juridiquement fiable.
+    <strong>BTD Consulting</strong> se tient &#224; votre disposition pour vous accompagner dans cette d&#233;marche.
+  </p>
+</div>
+
+<script>
+var PALETTE=['#2952a3','#e05c2d','#16a34a','#9333ea','#db2777','#ca8a04','#0891b2','#dc2626','#059669','#7c3aed','#0369a1','#b45309'];
+
+function fmtM(v){
+  if(Math.abs(v)>=1000000) return (v/1000000).toFixed(2).replace('.',',')+' M\u20ac';
+  if(Math.abs(v)>=1000) return Math.round(v/1000)+' k\u20ac';
+  return Math.round(v)+' \u20ac';
+}
+function fmtPct(v){return parseFloat(v).toFixed(1).replace('.',',')+' %'}
+function fmtN(v){return Math.round(v).toLocaleString('fr-FR')+' \u20ac'}
+function gv(id){return parseFloat(document.getElementById(id).value)||0}
+function gs(id){return document.getElementById(id).value}
+function gc(id){return document.getElementById(id).checked}
+
+function updateSlider(srcId,outId){
+  var v=parseFloat(document.getElementById(srcId).value);
+  var el=document.getElementById(outId);
+  if(srcId==='d-esop') el.textContent=v+'%';
+  else el.textContent=fmtM(v);
+}
+
+function showPage(name,btn){
+  document.querySelectorAll('.page-section').forEach(function(el){el.classList.remove('active')});
+  document.querySelectorAll('.nav-btn').forEach(function(el){el.classList.remove('active')});
+  document.getElementById('page-'+name).classList.add('active');
+  if(btn) btn.classList.add('active');
+  if(name==='captable') calcCapTable();
+  if(name==='synthese') buildSynthese();
+}
+
+// VALORISATION
+var MULT={
+  saas:{arr:[8,12,18],ca:[6,10,15],ebitda:[20,30,45],ga:true},
+  fintech:{arr:[6,10,15],ca:[5,8,12],ebitda:[18,25,40],ga:true},
+  marketplace:{arr:[4,7,11],ca:[3,6,9],ebitda:[15,20,30],ga:true},
+  ecommerce:{arr:[2,3,5],ca:[1,2,4],ebitda:[10,15,20],ga:false},
+  biotech:{arr:[5,8,12],ca:[4,7,10],ebitda:[0,0,0],ga:false},
+  deeptech:{arr:[7,12,20],ca:[5,10,18],ebitda:[0,0,0],ga:true},
+  industrie:{arr:[3,5,8],ca:[2,4,6],ebitda:[8,12,18],ga:false},
+  conseil:{arr:[1,2,3],ca:[0.8,1.5,2.5],ebitda:[6,8,12],ga:false},
+  immo:{arr:[3,5,8],ca:[2,4,6],ebitda:[10,14,20],ga:false},
+  autre:{arr:[3,6,10],ca:[2,4,8],ebitda:[8,12,18],ga:true}
+};
+var STADE={idea:0.5,seed:0.75,series_a:1,series_b:1.2,late:1.4};
+var MARKT={fr:0.9,eu:1.0,us:1.2};
+
+function calcValo(){
+  var sec=gs('v-secteur'), m=MULT[sec];
+  var stm=STADE[gs('v-stade')], mkm=MARKT[gs('v-market')];
+  var ca=gv('v-ca'), arr=gv('v-arr'), ebitda=gv('v-ebitda');
+  var growth=gv('v-growth'), ltv=gv('v-ltv'), clients=gv('v-clients'), ca_n1=gv('v-ca-n1');
+  var team=parseFloat(gs('v-team')), ip=parseFloat(gs('v-ip')), comp=parseFloat(gs('v-competition'));
+  var churn=gv('v-churn');
+  var qm=team*ip*comp*(1-(churn-10)/200);
+  var gAdj=m.ga&&growth>0?1+(growth/100)*0.5:1;
+  var methods=[];
+  if(arr>0) methods.push({name:'Multiple ARR',low:arr*m.arr[0]*stm*mkm*qm,med:arr*m.arr[1]*stm*mkm*gAdj*qm,high:arr*m.arr[2]*stm*mkm*gAdj*1.2*qm,tag:'ARR \u00d7'+m.arr[1]+'x'});
+  if(ca>0) methods.push({name:'Multiple CA',low:ca*m.ca[0]*stm*mkm*qm,med:ca*m.ca[1]*stm*mkm*gAdj*qm,high:ca*m.ca[2]*stm*mkm*gAdj*1.2*qm,tag:'CA \u00d7'+m.ca[1]+'x'});
+  if(ebitda>0&&m.ebitda[1]>0) methods.push({name:'Multiple EBITDA',low:ebitda*m.ebitda[0]*stm*mkm*qm,med:ebitda*m.ebitda[1]*stm*mkm*qm,high:ebitda*m.ebitda[2]*stm*mkm*qm,tag:'EBITDA \u00d7'+m.ebitda[1]+'x'});
+  if(ltv>0&&clients>0) methods.push({name:'Valeur clients (LTV)',low:ltv*clients*2*stm*mkm,med:ltv*clients*2.5*stm*mkm,high:ltv*clients*3.5*stm*mkm,tag:'LTV \u00d7 Clients'});
+  if(ca_n1>0) methods.push({name:'CA N+1 actualis\u00e9',low:ca_n1*m.ca[0]*stm*mkm*qm*0.7,med:ca_n1*m.ca[1]*stm*mkm*gAdj*qm*0.7,high:ca_n1*m.ca[2]*stm*mkm*gAdj*1.1*qm*0.7,tag:'CA N+1 \u00d7 mult.'});
+  var meds=methods.map(function(x){return x.med}).sort(function(a,b){return a-b});
+  var mediane=meds.length>0?meds[Math.floor(meds.length/2)]:0;
+  var min_v=meds.length>0?Math.min.apply(null,meds):0;
+  var max_v=meds.length>0?Math.max.apply(null,meds):0;
+  window._VR={mediane:mediane,min_v:min_v,max_v:max_v,methods:methods};
+  var wrap=document.getElementById('valo-results');
+  if(!methods.length){wrap.innerHTML='<div class="warn-box">Renseignez au moins un indicateur financier.</div>';return;}
+  wrap.innerHTML=methods.map(function(x,i){
+    return '<div class="valo-card'+(i===Math.floor(methods.length/2)?' best':'')+'">'+
+      '<div class="vc-label">'+x.name+'</div>'+
+      '<div class="vc-val">'+fmtM(x.med)+'</div>'+
+      '<div class="vc-method">'+x.tag+' &middot; '+fmtM(x.low)+'\u2013'+fmtM(x.high)+'</div>'+
+    '</div>';
+  }).join('');
+  document.getElementById('valo-metrics').innerHTML=
+    '<div class="metric"><div class="ml">Valo. basse</div><div class="mv red">'+fmtM(min_v)+'</div></div>'+
+    '<div class="metric"><div class="ml">Valo. m\u00e9diane</div><div class="mv royal">'+fmtM(mediane)+'</div></div>'+
+    '<div class="metric"><div class="ml">Valo. haute</div><div class="mv green">'+fmtM(max_v)+'</div></div>'+
+    '<div class="metric"><div class="ml">M\u00e9thodes actives</div><div class="mv dark">'+methods.length+'</div></div>';
+  var r='<h4>Analyse &amp; recommandations</h4><div style="font-size:13px;line-height:1.9">';
+  r+='<b>Valorisation recommand\u00e9e :</b> entre <b style="color:#2952a3">'+fmtM(min_v)+'</b> et <b style="color:#15803d">'+fmtM(max_v)+'</b>, valeur centrale : <b>'+fmtM(mediane)+'</b>.<br><br>';
+  if(growth>100) r+='\u2705 Croissance tr\u00e8s forte (&gt;100% YoY) \u2014 argument majeur.<br>';
+  else if(growth>50) r+='\u2705 Bonne croissance (50\u2013100% YoY).<br>';
+  else r+='\u26a0\ufe0f Croissance mod\u00e9r\u00e9e \u2014 insistez sur la solidit\u00e9 du mod\u00e8le.<br>';
+  if(gv('v-margin')>70) r+='\u2705 Marge brute excellente (&gt;70%).<br>';
+  else if(gv('v-margin')<40) r+='\u26a0\ufe0f Marge brute faible \u2014 \u00e0 am\u00e9liorer avant S\u00e9rie A+.<br>';
+  if(churn<5) r+='\u2705 Churn tr\u00e8s faible \u2014 signal de r\u00e9tention fort.<br>';
+  else if(churn>20) r+='\ud83d\udd34 Churn \u00e9lev\u00e9 (&gt;20%) \u2014 probl\u00e8me \u00e0 corriger.<br>';
+  if(ebitda<0) r+='\u26a0\ufe0f En phase d\u2019investissement \u2014 pr\u00e9cisez le runway.<br>';
+  r+='</div>';
+  document.getElementById('valo-reco').innerHTML=r;
+}
+
+// DILUTION
+var dFounders=[{name:'Fondateur A',pct:60},{name:'Fondateur B',pct:40}];
+var dChart=null, dTab='pie';
+
+function renderDRows(){
+  document.getElementById('d-founder-rows').innerHTML=dFounders.map(function(f,i){
+    return '<div class="irow">'+
+      '<input type="text" value="'+f.name+'" oninput="dFounders['+i+'].name=this.value;calcDilution()">'+
+      '<input type="number" value="'+f.pct+'" min="0" max="100" step="0.1" oninput="dFounders['+i+'].pct=parseFloat(this.value)||0;calcDilution()">'+
+      '<span class="pct">%</span>'+
+      '<button class="btn-sm" onclick="dFounders.splice('+i+',1);renderDRows();calcDilution()">Suppr.</button>'+
+    '</div>';
+  }).join('');
+}
+function addDFounder(){dFounders.push({name:'Actionnaire '+(dFounders.length+1),pct:0});renderDRows();calcDilution();}
+
+function calcDilution(){
+  var pre=gv('d-pre'),raise=gv('d-raise'),esopP=gv('d-esop')/100;
+  var post=pre+raise,invP=raise/post,remP=1-invP-esopP;
+  var totF=dFounders.reduce(function(s,f){return s+f.pct},0)||100;
+  var shares=dFounders.map(function(f){return{name:f.name,prePct:f.pct,postPct:(f.pct/totF)*remP*100}});
+  var n1='',n2='',n3='',n4='';
+  if(gc('d-antidilution')){var t=gs('d-antidilution-type');n1=t==='full_ratchet'?'\ud83d\udd34 Full ratchet actif.':'\ud83d\udfe1 '+t.replace('_',' ');}
+  if(gc('d-ratchet')) n2='\u26a0\ufe0f Ratchet : si CA N+1 &lt; '+fmtN(gv('d-ratchet-target'))+', investisseurs r\u00e9cup\u00e8rent '+gv('d-ratchet-pct')+'% suppl.';
+  if(gc('d-liquidpref')) n3='\ud83d\udcbc Pr\u00e9f\u00e9rence liq. '+gs('d-liq-mult')+'x &mdash; '+gs('d-liq-type')+' &mdash; priorit\u00e9 '+fmtM(raise*parseFloat(gs('d-liq-mult')))+'.';
+  if(gc('d-drag')) n4='\ud83c\udfaf Drag-along ('+gv('d-drag-pct')+'%) &mdash; sortie cible '+gv('d-exit-mult')+'x = '+fmtM(post*gv('d-exit-mult'))+'.';
+  document.getElementById('d-metrics').innerHTML=
+    '<div class="metric"><div class="ml">Pre-money</div><div class="mv royal">'+fmtM(pre)+'</div></div>'+
+    '<div class="metric"><div class="ml">Post-money</div><div class="mv green">'+fmtM(post)+'</div></div>'+
+    '<div class="metric"><div class="ml">Dilution investisseur</div><div class="mv red">'+fmtPct(invP*100)+'</div></div>'+
+    '<div class="metric"><div class="ml">Pool ESOP</div><div class="mv purple">'+fmtPct(esopP*100)+'</div></div>'+
+    '<div class="metric"><div class="ml">Part fondateurs</div><div class="mv dark">'+fmtPct(remP*100)+'</div></div>'+
+    '<div class="metric"><div class="ml">Dilution totale</div><div class="mv red">'+fmtPct((invP+esopP)*100)+'</div></div>'+
+    '<div class="metric"><div class="ml">Montant lev\u00e9</div><div class="mv teal">'+fmtM(raise)+'</div></div>'+
+    '<div class="metric"><div class="ml">Valeur fondateurs</div><div class="mv amber">'+fmtM(remP*post)+'</div></div>';
+  var cl=[n1,n2,n3,n4].filter(Boolean);
+  document.getElementById('d-clauses-summary').innerHTML=cl.length?'<h4>Clauses actives</h4><div style="font-size:13px;line-height:2.1">'+cl.join('<br>')+'</div>':'<h4>Clauses</h4><div style="font-size:13px;color:#64748b">Aucune clause avanc\u00e9e activ\u00e9e.</div>';
+  window._DS={pre:pre,raise:raise,post:post,invP:invP,esopP:esopP,remP:remP,shares:shares};
+  drawDChart();
+}
+
+function setDTab(t,btn){
+  dTab=t;
+  document.querySelectorAll('#page-dilution .tab').forEach(function(el){el.classList.remove('active')});
+  if(btn) btn.classList.add('active');
+  drawDChart();
+}
+
+function lgd(id,items){
+  var el=document.getElementById(id);if(!el)return;
+  el.innerHTML=items.map(function(i){return '<span style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:2px;background:'+i.c+'"></span>'+i.l+'</span>';}).join('');
+}
+
+function drawDChart(){
+  var s=window._DS;if(!s)return;
+  if(dChart) dChart.destroy();
+  var ctx=document.getElementById('d-chart');
+  var tt={backgroundColor:'#1e3d7a',titleColor:'#bfdbfe',bodyColor:'#fff',borderColor:'#2952a3',borderWidth:1};
+  var grid={color:'rgba(148,163,184,0.12)'};var ticks={color:'#94a3b8'};
+  if(dTab==='pie'){
+    var lb=s.shares.map(function(f){return f.name}).concat(['Investisseurs','ESOP']);
+    var dt=s.shares.map(function(f){return parseFloat(f.postPct.toFixed(2))}).concat([parseFloat((s.invP*100).toFixed(2)),parseFloat((s.esopP*100).toFixed(2))]);
+    var cl=lb.map(function(_,i){return PALETTE[i%PALETTE.length]});
+    lgd('d-legend',lb.map(function(l,i){return{l:l+' \u2014 '+fmtPct(dt[i]),c:cl[i]}}));
+    dChart=new Chart(ctx,{type:'doughnut',data:{labels:lb,datasets:[{data:dt,backgroundColor:cl,borderWidth:4,borderColor:'#fff',hoverOffset:10}]},options:{responsive:true,maintainAspectRatio:false,cutout:'55%',plugins:{legend:{display:false},tooltip:{...tt,callbacks:{label:function(c){return ' '+fmtPct(c.raw)+' \u2014 '+fmtM(c.raw/100*s.post)}}}}}});
+  } else if(dTab==='bar'){
+    var lb2=s.shares.map(function(f){return f.name}).concat(['ESOP']);
+    var bef=s.shares.map(function(f){return parseFloat(f.prePct.toFixed(2))}).concat([0]);
+    var aft=s.shares.map(function(f){return parseFloat(f.postPct.toFixed(2))}).concat([parseFloat((s.esopP*100).toFixed(2))]);
+    lgd('d-legend',[{l:'Avant lev\u00e9e',c:'#2952a3'},{l:'Apr\u00e8s lev\u00e9e',c:'#e05c2d'}]);
+    dChart=new Chart(ctx,{type:'bar',data:{labels:lb2,datasets:[{label:'Avant',data:bef,backgroundColor:lb2.map(function(_,i){return PALETTE[i%PALETTE.length]+'99'}),borderRadius:4},{label:'Apr\u00e8s',data:aft,backgroundColor:lb2.map(function(_,i){return PALETTE[i%PALETTE.length]}),borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{...tt,callbacks:{label:function(c){return ' '+fmtPct(c.raw)}}}},scales:{x:{ticks:ticks,grid:grid},y:{ticks:{color:'#94a3b8',callback:function(v){return v+'%'}},grid:grid,max:100}}}});
+  } else if(dTab==='valo'){
+    var lb3=s.shares.map(function(f){return f.name}).concat(['Investisseurs','ESOP']);
+    var vals=s.shares.map(function(f){return Math.round(f.postPct/100*s.post)}).concat([Math.round(s.invP*s.post),Math.round(s.esopP*s.post)]);
+    var cl3=lb3.map(function(_,i){return PALETTE[i%PALETTE.length]});
+    lgd('d-legend',lb3.map(function(l,i){return{l:l,c:cl3[i]}}));
+    dChart=new Chart(ctx,{type:'bar',data:{labels:lb3,datasets:[{data:vals,backgroundColor:cl3,borderRadius:4,borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{...tt,callbacks:{label:function(c){return ' '+fmtM(c.raw)}}}},scales:{x:{ticks:ticks,grid:grid},y:{ticks:{color:'#94a3b8',callback:function(v){return fmtM(v)}},grid:grid}}}});
+  } else {
+    var mults=[2,3,5,7,10];
+    var fTot=s.shares.reduce(function(sum,f){return sum+f.postPct},0)/100;
+    var lp=gc('d-liquidpref')?parseFloat(gs('d-liq-mult')):0;
+    var fR=mults.map(function(m){var ev=s.post*m;var ig=lp>0?Math.min(s.raise*lp,ev):ev*s.invP;if(lp>0&&gs('d-liq-type')==='participating')ig+=Math.max(0,ev-ig)*s.invP;return Math.round((ev-ig)*fTot);});
+    var iR=mults.map(function(m){var ev=s.post*m;var ig=lp>0?Math.min(s.raise*lp,ev):ev*s.invP;if(lp>0&&gs('d-liq-type')==='participating')ig+=Math.max(0,ev-ig)*s.invP;return Math.round(ig);});
+    lgd('d-legend',[{l:'Fondateurs',c:'#2952a3'},{l:'Investisseurs',c:'#e05c2d'}]);
+    dChart=new Chart(ctx,{type:'bar',data:{labels:mults.map(function(m){return m+'x ('+fmtM(s.post*m)+')'}),datasets:[{label:'Fondateurs',data:fR,backgroundColor:'#2952a3',borderRadius:4},{label:'Investisseurs',data:iR,backgroundColor:'#e05c2d',borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{...tt,callbacks:{label:function(c){return ' '+fmtM(c.raw)}}}},scales:{x:{ticks:{color:'#94a3b8',maxRotation:20},grid:grid},y:{ticks:{color:'#94a3b8',callback:function(v){return fmtM(v)}},grid:grid}}}});
+  }
+}
+
+// INSTRUMENTS
+var iCount=0, iChart=null;
+function addInstrument(type){
+  iCount++;
+  var id='ins-'+iCount;
+  var LBL={oc:'OC / SAFE',bspce:'BSPCE',bsa:'BSA AIR'};
+  var CLS={oc:'type-oc',bspce:'type-bspce',bsa:'type-bsa'};
+  var f='';
+  if(type==='oc'||type==='bsa'){
+    f='<div class="g3" style="margin-top:10px">'+
+      '<div class="field"><label>Montant (&#8364;)</label><input type="number" data-f="amount" value="100000" oninput="calcInst()"></div>'+
+      '<div class="field"><label>D\u00e9cote (%)</label><input type="number" data-f="discount" value="20" min="0" max="50" oninput="calcInst()"><span class="hint">Discount prochain tour</span></div>'+
+      '<div class="field"><label>Valuation cap (&#8364;)</label><input type="number" data-f="cap" value="5000000" oninput="calcInst()"><span class="hint">0 = pas de cap</span></div>'+
+      '<div class="field"><label>Taux annuel (%)</label><input type="number" data-f="rate" value="8" min="0" oninput="calcInst()"></div>'+
+      '<div class="field"><label>Dur\u00e9e conv. (mois)</label><input type="number" data-f="duration" value="18" min="1" oninput="calcInst()"></div>'+
+      '<div class="field"><label>Seuil d\u00e9clenchement (&#8364;)</label><input type="number" data-f="trigger" value="500000" oninput="calcInst()"></div>'+
+    '</div>';
+  } else {
+    f='<div class="g3" style="margin-top:10px">'+
+      '<div class="field"><label>Pool allou\u00e9 (%)</label><input type="number" data-f="pool" value="5" min="0" max="20" oninput="calcInst()"></div>'+
+      '<div class="field"><label>Prix d\'exercice (&#8364;)</label><input type="number" data-f="strike" value="1" min="0" oninput="calcInst()"></div>'+
+      '<div class="field"><label>Vesting (mois)</label><input type="number" data-f="vesting" value="48" min="12" oninput="calcInst()"></div>'+
+      '<div class="field"><label>Cliff (mois)</label><input type="number" data-f="cliff" value="12" min="0" oninput="calcInst()"></div>'+
+      '<div class="field"><label>B\u00e9n\u00e9ficiaires</label><input type="text" data-f="ben" value="\u00c9quipe" style="width:120px"></div>'+
+      '<div class="field"><label>% d\u00e9j\u00e0 acquis</label><input type="number" data-f="vested" value="0" min="0" max="100" oninput="calcInst()"></div>'+
+    '</div>';
+  }
+  var div=document.createElement('div');
+  div.className='instrument-card';div.id=id;div.dataset.type=type;
+  div.innerHTML='<div class="ic-header"><span class="ic-type '+CLS[type]+'">'+LBL[type]+'</span><button class="btn-sm" onclick="document.getElementById(\''+id+'\').remove();calcInst()">Supprimer</button></div>'+
+    '<div class="field"><label>Nom</label><input type="text" value="'+LBL[type]+' #'+iCount+'" style="width:100%" oninput="calcInst()"></div>'+f;
+  document.getElementById(type+'-list').appendChild(div);
+  calcInst();
+}
+
+function calcInst(){
+  var pm=window._DS?window._DS.post:3500000;
+  var items=[];
+  document.querySelectorAll('.instrument-card').forEach(function(el){
+    var t=el.dataset.type;
+    var amt=parseFloat((el.querySelector('[data-f=amount]')||{value:0}).value)||0;
+    var disc=parseFloat((el.querySelector('[data-f=discount]')||{value:20}).value)||20;
+    var cap=parseFloat((el.querySelector('[data-f=cap]')||{value:0}).value)||0;
+    var rate=parseFloat((el.querySelector('[data-f=rate]')||{value:0}).value)||0;
+    var dur=parseFloat((el.querySelector('[data-f=duration]')||{value:18}).value)||18;
+    var pool=parseFloat((el.querySelector('[data-f=pool]')||{value:0}).value)||0;
+    var vest=parseFloat((el.querySelector('[data-f=vested]')||{value:0}).value)||0;
+    var nm=(el.querySelector('input[type=text]')||{value:t}).value;
+    if(t==='oc'||t==='bsa'){
+      var ai=amt*(1+rate/100*dur/12);
+      var cp=cap>0?Math.min(pm*(1-disc/100),cap):pm*(1-disc/100);
+      if(cp<=0)cp=1;
+      var dp=(ai/cp)*100;
+      items.push({name:nm,type:t,amount:ai,dilPct:dp,detail:'Conv. \u00e0 '+fmtM(cp)+' \u00b7 '+fmtPct(dp)});
+    } else if(t==='bspce'){
+      var ap=pool*(1-vest/100);
+      items.push({name:nm,type:t,amount:0,dilPct:ap,detail:fmtPct(pool)+' pool \u00b7 '+fmtPct(ap)+' non-vest\u00e9'});
+    }
+  });
+  var tAmt=items.reduce(function(s,i){return s+i.amount},0);
+  var tDil=items.reduce(function(s,i){return s+i.dilPct},0);
+  var html=items.length>0?
+    '<h4>Impact dilutif total</h4>'+
+    '<div class="g4" style="margin-bottom:12px">'+
+      '<div class="metric"><div class="ml">Total OC/BSA</div><div class="mv royal">'+fmtM(tAmt)+'</div></div>'+
+      '<div class="metric"><div class="ml">Dilution totale</div><div class="mv red">'+fmtPct(tDil)+'</div></div>'+
+      '<div class="metric"><div class="ml">Instruments actifs</div><div class="mv dark">'+items.length+'</div></div>'+
+      '<div class="metric"><div class="ml">Fully diluted</div><div class="mv amber">'+fmtPct(Math.min(tDil,40))+'</div></div>'+
+    '</div>'+
+    '<table class="dtable"><thead><tr><th>Instrument</th><th>Type</th><th>Montant</th><th>Dilution</th><th>D\u00e9tail</th></tr></thead><tbody>'+
+    items.map(function(i){return '<tr><td>'+i.name+'</td><td><span class="ic-type type-'+i.type+'" style="font-size:10px">'+i.type.toUpperCase()+'</span></td><td>'+(i.amount>0?fmtM(i.amount):'&mdash;')+'</td><td style="color:#b91c1c;font-weight:600">'+fmtPct(i.dilPct)+'</td><td style="color:#64748b">'+i.detail+'</td></tr>';}).join('')+
+    '<tr><td colspan="3"><b>Total</b></td><td style="color:#b91c1c"><b>'+fmtPct(tDil)+'</b></td><td></td></tr></tbody></table>'
+    :'<div style="color:#64748b;font-size:13px">Ajoutez des instruments pour voir leur impact.</div>';
+  document.getElementById('instruments-impact').innerHTML=html;
+  if(iChart) iChart.destroy();
+  if(items.length>0){
+    iChart=new Chart(document.getElementById('inst-chart'),{type:'bar',data:{labels:items.map(function(i){return i.name}),datasets:[{data:items.map(function(i){return parseFloat(i.dilPct.toFixed(2))}),backgroundColor:items.map(function(_,i){return PALETTE[i%PALETTE.length]}),borderRadius:6,borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'#1e3d7a',bodyColor:'#fff',borderColor:'#2952a3',borderWidth:1,callbacks:{label:function(c){return ' '+fmtPct(c.raw)+' dilution'}}}},scales:{x:{ticks:{color:'#94a3b8'},grid:{color:'rgba(148,163,184,0.12)'}},y:{ticks:{color:'#94a3b8',callback:function(v){return v+'%'}},grid:{color:'rgba(148,163,184,0.12)'}}}}});
+  }
+}
+
+// CAP TABLE
+function calcCapTable(){
+  var s=window._DS;
+  if(!s){document.getElementById('captable-table-wrap').innerHTML='<div class="warn-box">Configurez d\'abord votre tour dans l\'onglet Dilution.</div>';return;}
+  var ev=gv('ct-exit-val'),ey=gv('ct-exit-year');
+  var lp=gc('d-liquidpref')?parseFloat(gs('d-liq-mult')):0;
+  var rows=s.shares.map(function(f,i){return{name:f.name,type:'Fondateur',pPre:f.prePct,pPost:f.postPct,col:PALETTE[i%PALETTE.length]}}).concat([
+    {name:'Investisseurs',type:'Investisseur',pPre:0,pPost:s.invP*100,col:'#e05c2d'},
+    {name:'Pool ESOP/BSPCE',type:'ESOP',pPre:0,pPost:s.esopP*100,col:'#9333ea'}
+  ]);
+  var ig=lp>0?Math.min(s.raise*lp,ev):ev*s.invP;
+  if(lp>0&&gs('d-liq-type')==='participating') ig+=Math.max(0,ev-ig)*s.invP;
+  var rem=Math.max(0,ev-ig);
+  document.getElementById('captable-table-wrap').innerHTML=
+    '<table class="dtable"><thead><tr><th>Actionnaire</th><th>Type</th><th>Avant %</th><th>Apr\u00e8s %</th><th>Valeur post</th><th>Retour exit</th></tr></thead><tbody>'+
+    rows.map(function(r){
+      var val=Math.round(r.pPost/100*s.post);
+      var ret=r.type==='Investisseur'?Math.round(ig):Math.round((r.pPost/100)*rem);
+      return '<tr><td><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:'+r.col+';margin-right:6px"></span>'+r.name+'</td>'+
+        '<td style="font-size:10px;font-weight:600;color:#64748b">'+r.type+'</td>'+
+        '<td>'+fmtPct(r.pPre)+'</td><td style="font-weight:600">'+fmtPct(r.pPost)+'</td>'+
+        '<td style="color:#2952a3">'+fmtM(val)+'</td><td style="color:#15803d;font-weight:600">'+fmtM(ret)+'</td></tr>';
+    }).join('')+
+    '<tr><td><b>Total</b></td><td></td><td></td><td><b>100%</b></td><td><b>'+fmtM(s.post)+'</b></td><td><b>'+fmtM(ev)+'</b></td></tr></tbody></table>';
+  var mult=(ev/s.raise).toFixed(1);
+  var irr=((Math.pow(ev/s.raise,1/ey)-1)*100).toFixed(1);
+  document.getElementById('captable-exit-results').innerHTML=
+    '<h4>Simulation &mdash; '+gs('ct-exit-type')+' \u00e0 '+fmtM(ev)+' (an '+ey+')</h4>'+
+    '<div class="g4" style="margin-top:10px">'+
+      '<div class="metric"><div class="ml">Retour investisseurs</div><div class="mv green">'+fmtM(Math.round(ig))+'</div></div>'+
+      '<div class="metric"><div class="ml">Multiple investisseur</div><div class="mv royal">'+(ig/s.raise).toFixed(1)+'x</div></div>'+
+      '<div class="metric"><div class="ml">IRR estim\u00e9</div><div class="mv amber">'+irr+'%/an</div></div>'+
+      '<div class="metric"><div class="ml">Multiple global</div><div class="mv teal">'+mult+'x</div></div>'+
+    '</div>';
+}
+
+// SYNTHESE
+function buildSynthese(){
+  var s=window._DS, vr=window._VR;
+  var h='<div class="slbl">R\u00e9capitulatif du dossier</div><div class="g2" style="margin-bottom:16px">';
+  if(vr) h+='<div class="result-box"><h4>Valorisation</h4><div style="font-size:13px;line-height:2"><b>Fourchette :</b> '+fmtM(vr.min_v)+' \u2013 '+fmtM(vr.max_v)+'<br><b>Valeur centrale :</b> '+fmtM(vr.mediane)+'<br><b>Secteur :</b> '+gs('v-secteur')+' &middot; <b>Stade :</b> '+gs('v-stade')+'<br><b>CA :</b> '+fmtN(gv('v-ca'))+' &middot; <b>ARR :</b> '+fmtN(gv('v-arr'))+'<br><b>Croissance :</b> '+gv('v-growth')+'% &middot; <b>Marge :</b> '+gv('v-margin')+'%</div></div>';
+  else h+='<div class="warn-box">Compl\u00e9tez l\'onglet Valorisation.</div>';
+  if(s) h+='<div class="result-box"><h4>Tour de table</h4><div style="font-size:13px;line-height:2"><b>Pre-money :</b> '+fmtM(s.pre)+'<br><b>Post-money :</b> '+fmtM(s.post)+'<br><b>Lev\u00e9 :</b> '+fmtM(s.raise)+'<br><b>Dilution inv. :</b> '+fmtPct(s.invP*100)+'<br><b>ESOP :</b> '+fmtPct(s.esopP*100)+'<br><b>Fondateurs :</b> '+fmtPct(s.remP*100)+'</div></div>';
+  else h+='<div class="warn-box">Compl\u00e9tez l\'onglet Dilution.</div>';
+  h+='</div>';
+  var cl=[];
+  if(gc('d-antidilution')) cl.push('Anti-dilution ('+gs('d-antidilution-type')+')');
+  if(gc('d-ratchet')) cl.push('Ratchet de performance');
+  if(gc('d-liquidpref')) cl.push('Pr\u00e9f\u00e9rence de liquidation '+gs('d-liq-mult')+'x');
+  if(gc('d-drag')) cl.push('Drag-along / Tag-along');
+  h+='<div class="slbl">Clauses &amp; vigilance</div><div class="g2">'+
+    '<div class="result-box"><h4>Clauses actives</h4>'+(cl.length?cl.map(function(c){return '<div style="font-size:13px;padding:4px 0;border-bottom:1px solid #e2e8f0">\u2705 '+c+'</div>';}).join(''):'<div style="color:#64748b;font-size:13px">Aucune clause avanc\u00e9e.</div>')+'</div>'+
+    '<div class="result-box"><h4>Points de vigilance</h4><div style="font-size:13px;line-height:2">'+
+    (s&&s.invP*100>25?'\u26a0\ufe0f Dilution &gt; 25% \u2014 revoir la valorisation<br>':'')+
+    (s&&s.esopP*100>15?'\u26a0\ufe0f ESOP \u00e9lev\u00e9 (&gt;15%)<br>':'')+
+    (vr&&s&&s.pre>vr.max_v*1.2?'\ud83d\udd34 Pre-money potentiellement trop \u00e9lev\u00e9e<br>':'')+
+    (gc('d-liquidpref')&&parseFloat(gs('d-liq-mult'))>2?'\ud83d\udd34 Liq. pref &gt;2x \u2014 terme d\u00e9favorable<br>':'')+
+    (gc('d-antidilution')&&gs('d-antidilution-type')==='full_ratchet'?'\ud83d\udd34 Full ratchet \u2014 terme agressif<br>':'')+
+    '\u2705 Dossier configur\u00e9 avec '+cl.length+' clause(s).</div></div></div>';
+  h+='<div class="slbl">Prochaines \u00e9tapes</div><div class="result-box"><h4>Actions recommand\u00e9es</h4><div style="font-size:13px;line-height:2.2">'+
+    '1. \ud83d\udccb <b>Pr\u00e9parer le teaser (2 pages)</b> avec la valorisation m\u00e9diane<br>'+
+    '2. \ud83d\udcca <b>Business plan N+3</b> avec hypoth\u00e8ses de croissance<br>'+
+    '3. \ud83e\udd1d <b>Identifier les fonds cibles</b> selon secteur et stade<br>'+
+    '4. \u2696\ufe0f <b>N\u00e9gocier les term sheets</b> \u2014 contacter BTD Consulting<br>'+
+    '5. \ud83d\udcdd <b>Due diligence</b> \u2014 pr\u00e9parer la data room</div></div>';
+  document.getElementById('synthese-content').innerHTML=h;
+}
+
+// INIT
+renderDRows();
+calcValo();
+calcDilution();
+calcInst();
+</script>
 </body>
 </html>
